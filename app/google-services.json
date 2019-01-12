@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "191160384171",
+    "firebase_url": "https://speakup-3e9f1.firebaseio.com",
+    "project_id": "speakup-3e9f1",
+    "storage_bucket": "speakup-3e9f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191160384171:android:d824b5a582ad49e0",
+        "android_client_info": {
+          "package_name": "com.lebanmohamed.speakup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191160384171-3fcco58gnv5jucpe82dnr32lacvun9to.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lebanmohamed.speakup",
+            "certificate_hash": "fc5693cf2e26506aa63bc4436810c2f98072efc3"
+          }
+        },
+        {
+          "client_id": "191160384171-rk95jqmahoh9a9i5i41cv4fcp8996496.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb_lqPGUzC6hs8S8dl-lcliNZUetkmSBQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191160384171-rk95jqmahoh9a9i5i41cv4fcp8996496.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
