@@ -1,5 +1,6 @@
 package com.lebanmohamed.speakup;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
@@ -19,10 +21,11 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity
 {
-    EditText phoneNumber, code;
-    Button submitVerification;
+    private EditText phoneNumber, code;
+    private Button submitVerification;
+    private String verificationID;
 
-    PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks;
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks;
 
 
     @Override
@@ -32,14 +35,28 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(this);
 
+        userIsLoggedIn();
+
         phoneNumber = findViewById(R.id.phonenumber);
         code = findViewById(R.id.code);
 
         submitVerification = findViewById(R.id.verifybutton);
 
-        submitVerification.setOnClickListener((v) -> startNumberVerification());
+        submitVerification.setOnClickListener((v) ->
+        {
+            if(verificationID != null)
+            {
+                VerifyNumberUsingCode(verificationID, code.getText().toString());
+            }
 
-        callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            else
+            {
+                startNumberVerification();
+            }
+        });
+
+        callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks()
+        {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential)
             {
@@ -51,7 +68,24 @@ public class MainActivity extends AppCompatActivity
             public void onVerificationFailed(FirebaseException e) {
 
             }
+
+            @Override
+            public void onCodeSent(String verification, PhoneAuthProvider.ForceResendingToken forceResendingToken)
+            {
+                super.onCodeSent(verification, forceResendingToken);
+
+                verificationID = verification;
+                submitVerification.setText("Verify Code");
+
+            }
         };
+
+    }
+
+    private void VerifyNumberUsingCode(String verifyID, String code)
+    {
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verifyID, code);
+        signInWithPhoneAuthCredential(credential);
 
     }
 
@@ -71,15 +105,25 @@ public class MainActivity extends AppCompatActivity
 
     private void userIsLoggedIn()
     {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null)
+        {
+            startActivity(new Intent(getApplicationContext(), MainPageActivity.class));
+            finish();
+            return;
+        }
 
     }
 
     private void startNumberVerification()
     {
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber.getText().toString(), 120, TimeUnit.SECONDS, this, callbacks);
-
-
-
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNumber.getText().toString(),
+                60,
+                TimeUnit.SECONDS,
+                this,
+                callbacks
+        );
     }
 
 

@@ -14,15 +14,15 @@
         />
 
     <EditText
+        android:id="@+id/code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/code"
-        android:hint="Enter your code"/>
+        android:hint="Enter your code" />
 
     <Button
         android:id="@+id/verifybutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Verify Number"/>
+        android:text="Verify Number" />
 
 </LinearLayout>
